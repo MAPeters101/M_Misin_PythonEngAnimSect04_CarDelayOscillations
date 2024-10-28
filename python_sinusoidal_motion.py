@@ -30,8 +30,20 @@ car_purple=y_i-2*(t-6)
 frame_amount=len(t)
 
 def update_plot(num):
+    # Subplot 0
+    X_blue.set_data(t[0:num],train_blue[0:num])
+    X_red.set_data(t[0:num],train_red[0:num])
 
-    return
+    # Subplot 1 & 2
+    block_blue.set_data([train_blue[num]-0.45,train_blue[num]+0.45],[3.5,3.5])
+    block_red.set_data([train_red[num]-0.45,train_red[num]+0.45],[1.5,1.5])
+
+
+
+
+
+
+    return X_blue,X_red,block_blue,block_red
 
 # Set up your figure properties
 fig=plt.figure(figsize=(16,9),dpi=80,facecolor=(0.8,0.8,0.8))
@@ -67,9 +79,9 @@ ax1.xaxis.set_label_coords(0.5,0)
 # Subplot 2
 ax2=fig.add_subplot(gs[:,1],facecolor=(0.9,0.9,0.9))
 block_blue,=ax2.plot([],[],'-b',linewidth=28)
-block_red,=ax2.plot([],[],'-b',linewidth=28)
-block_green,=ax2.plot([],[],'-b',linewidth=24)
-block_purple,=ax2.plot([],[],'-b',linewidth=24)
+block_red,=ax2.plot([],[],'r',linewidth=28)
+block_green,=ax2.plot([],[],'g',linewidth=24)
+block_purple,=ax2.plot([],[],'purple',linewidth=24)
 
 # Create danger zone 1
 danger_zone1_1,=ax2.plot([3,4],[1,1],'-k',linewidth=3)
@@ -107,9 +119,11 @@ plt.ylim(-2,y_i+1)
 plt.grid(True)
 ax2.spines['left'].set_position('center')
 ax2.spines['bottom'].set_position(('data',0))
+plt.xticks(np.concatenate([np.arange(-7-1,0,1),np.arange(1,7+2,1)]),size=10)
+plt.yticks(np.concatenate([np.arange(-2,0,1),np.arange(1,y_i+2,1)]),size=10)
 
-
-
+ani=animation.FuncAnimation(fig,update_plot,
+    frames=frame_amount,interval=20,repeat=True,blit=True)
 
 plt.show()
 
