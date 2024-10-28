@@ -16,13 +16,14 @@ f1=0.125 # [hz]
 A1=7 # [m]
 train_blue=A1*np.sin(2*np.pi*f1*t)
 
-# Blue train:
+# Red train:
 f2=0.125 # [hz]
 A2=-7 # [m]
 train_red=A2*np.cos(2*np.pi*f2*t)
 
 # Cars:
 y_i=13
+y_i_ani=y_i*np.ones(len(t))
 car_green=y_i-2*(t-2)**2
 car_purple=y_i-2*(t-6)
 
@@ -38,12 +39,19 @@ def update_plot(num):
     block_blue.set_data([train_blue[num]-0.45,train_blue[num]+0.45],[3.5,3.5])
     block_red.set_data([train_red[num]-0.45,train_red[num]+0.45],[1.5,1.5])
 
+    if t[num]>=2:
+        block_green.set_data([3.5,3.5],[car_green[num]-0.5,car_green[num]+0.5])
+        Y_green.set_data(t[int(2/dt):num],car_green[int(2/dt):num])
+    else:
+        block_green.set_data([3.5,3.5],[y_i-0.5,y_i+0.5])
+        Y_green2.set_data(t[0:num],y_i_ani[0:num])
 
 
 
 
 
-    return X_blue,X_red,block_blue,block_red
+
+    return X_blue,X_red,block_blue,block_red,block_green,Y_green,Y_green2
 
 # Set up your figure properties
 fig=plt.figure(figsize=(16,9),dpi=80,facecolor=(0.8,0.8,0.8))
