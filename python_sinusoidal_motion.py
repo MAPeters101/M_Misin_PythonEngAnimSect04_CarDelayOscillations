@@ -12,13 +12,13 @@ t=np.arange(t0,t_end+dt,dt)
 # Create arrays for motion
 
 # Blue train:
-f1=0.125 # [hz]
-A1=7 # [m]
+f1=1/3 # [hz]
+A1=20 # [m]
 train_blue=A1*np.sin(2*np.pi*f1*t)
 
 # Red train:
-f2=0.125 # [hz]
-A2=-7 # [m]
+f2=1/12 # [hz]
+A2=-5 # [m]
 train_red=A2*np.cos(2*np.pi*f2*t)
 
 # Cars:
